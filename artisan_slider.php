@@ -7,16 +7,18 @@ Description: Artisan / Pastry Professor slider showing cards in a 3x2 grid per s
 function render_artisan_slider( $atts ) {
     // Swiper assets via CDN
     wp_enqueue_style(
-        'swiper-css',
-        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
-    );
-    wp_enqueue_script(
-        'swiper-js',
-        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-        array(),
-        null,
-        true
-    );
+    'swiper-css',
+    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+    array(),
+    '11.0'
+);
+wp_enqueue_script(
+    'swiper-js',
+    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+    array(),
+    '11.0',
+    true
+);
 
     // IMPORTANT: use your real CPT slug (it's "professor" in your template)
     $query = new WP_Query(array(
@@ -40,9 +42,10 @@ function render_artisan_slider( $atts ) {
               ?>
               <div class="swiper-slide">
                 <article class="artisan-card">
-                  <div class="artisan-card__image"
-                       style="background-image:url('<?php echo esc_url( $photo ); ?>');"></div>
-
+                  <a href="<?php the_permalink(); ?>" class="artisan-card__link">
+                    <div class="artisan-card__image"
+                        style="background-image:url('<?php echo esc_url( $photo ); ?>');"></div>
+                  </a>
                   <div class="artisan-card__body">
                     <h3 class="artisan-card__title"><?php the_title(); ?></h3>
                     <a href="<?php the_permalink(); ?>" class="artisan-card__button">View</a>
@@ -59,6 +62,20 @@ function render_artisan_slider( $atts ) {
           <div class="swiper-button-next professor-nav professor-nav--next"></div>
         </div>
       </section>
+      <style>
+        .professorSwiper .swiper-button-next,
+        .professorSwiper .swiper-button-prev {
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          color: #fff;
+        }
+        .professorSwiper .swiper-button-next::after,
+        .professorSwiper .swiper-button-prev::after {
+          font-size: 1.2rem;
+        }
+      </style>
 
       <script>
         document.addEventListener("DOMContentLoaded", function () {
